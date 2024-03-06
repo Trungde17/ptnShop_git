@@ -1,0 +1,9 @@
+
+.login_content{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.color_of_error{
+    color: red;
+}
