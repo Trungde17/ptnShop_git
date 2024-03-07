@@ -46,7 +46,7 @@
                                     </div>
                                     <c:set var="errorAccount" value="${requestScope.errorAccount}"/>
                                     <p class="color_of_error">${errorAccount}</p>
-                                    
+
                                     <c:set var="checked" value="${requestScope.user_type}"/>
                                     <c:set var="checkedCus" value="checked"/>
                                     <c:set var="checkedEm" value=""/>
@@ -73,7 +73,9 @@
                                     </div>
 
                                     <p class="small mb-5 pb-lg-2"><a class="text-muted" href="#!">Forgot password?</a></p>
-                                    <p>Don't have an account? <a href="#!" class="link-info">Register here</a></p>
+                                    <form>
+                                        <p>Don't have an account? <button type="submit" class="link-info">Register here</button></p>
+                                    </form>
 
                                 </form>
 

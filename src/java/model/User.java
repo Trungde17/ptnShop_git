@@ -12,22 +12,22 @@ public class User {
     private String last_name;
     private String email;
     private String password;
+    private String address;
     private String phone;
-    private String cccd;
     private Date registration_date;
 
     public User() {
     }
 
-    public User(String user_id, Boolean user_type, String first_name, String last_name, String email, String password, String phone, String cccd, Date registration_date) {
+    public User(String user_id, Boolean user_type, String first_name, String last_name, String email, String password,String address, String phone, Date registration_date) {
         this.user_id = user_id;
         this.user_type = user_type;
         this.first_name = first_name;
         this.last_name = last_name;
         this.email = email;
         this.password = password;
+        this.address=address;
         this.phone = phone;
-        this.cccd = cccd;
         this.registration_date = registration_date;
     }
 
@@ -87,14 +87,6 @@ public class User {
         this.phone = phone;
     }
 
-    public String getCccd() {
-        return cccd;
-    }
-
-    public void setCccd(String cccd) {
-        this.cccd = cccd;
-    }
-
     public Date getRegistration_date() {
         return registration_date;
     }
@@ -103,6 +95,15 @@ public class User {
         this.registration_date = registration_date;
     }
 
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+    
+    
     @Override
     public int hashCode() {
         int hash = 7;
@@ -126,8 +127,11 @@ public class User {
 
     @Override
     public String toString() {
-        return "User{" + "user_id=" + user_id + ", user_type=" + user_type + ", first_name=" + first_name + ", last_name=" + last_name + ", email=" + email + ", password=" + password + ", phone=" + phone + ", cccd=" + cccd + ", registration_date=" + registration_date + '}';
+        return "User{" + "user_id=" + user_id + ", user_type=" + user_type + ", first_name=" + first_name + ", last_name=" + last_name + ", email=" + email + ", password=" + password + ", address=" + address + ", phone=" + phone + ", registration_date=" + registration_date + '}';
     }
+
+    
+
     
     
 }

@@ -1,0 +1,12 @@
+.form_confirm{
+    display: flex;
+    justify-content: center;
+    align-content: center;
+}
+.form_confirm input{
+    transform: scale(1.3);
+}
+.form_confirm_stmt{
+    margin-bottom: 0px;
+    margin-left: 10px;
+}
