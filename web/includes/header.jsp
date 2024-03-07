@@ -37,25 +37,25 @@
                 </div>
                 <!-- nav-->
                 <ul class="navbar-nav">
-                    <li class="nav-item">
+                    <li class="nav-item nav_component">
                         <a class="nav-link" href="#">Home</a>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item nav_component">
                         <a class="nav-link" href="#">About</a>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item nav_component">
                         <a class="nav-link" href="#">Product</a>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item nav_component">
                         <a class="nav-link" href="#">Cart</a>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item nav_component">
                         <a class="nav-link" href="#">Buy</a>
                     </li>
                     <c:set var="user" value="${sessionScope.user}"/>
                     <c:if test="${user eq null}">
                         <li class="nav-item">
-                            <p class="nav-link" onclick="openLoginAndRegister()">Login</p>
+                            <p class="nav-link cursor_pointer" onclick="openLoginAndRegister()">Login</p>
                         </li>
                     </c:if>
                     <c:if test="${user ne null}">
@@ -63,7 +63,7 @@
                         <li class="nav-item" id="user_header">
                             <p class="nav-link user_header">${user.getFirst_name()}</p>
                             <form action="${pageContext.request.contextPath}/HomeController">
-                                <input type="submit" name="action" value="Logout" id="logout_header">
+                                <input type="submit" class="cursor_pointer" name="action" value="Logout" id="logout_header">
                             </form>
                         </li>
                     </c:if>
@@ -74,7 +74,7 @@
         <div id="modal_access">
 
             <div id="login_and_regist" class="border log_and_reg_js">
-                <button type="button" class="btn-close ti-close close_button" aria-label="Close" onclick="closeLoginAndRegister()"></button>
+                <button type="button" class="btn-close ti-close close_button cursor_pointer" aria-label="Close" onclick="closeLoginAndRegister()"></button>
                 <form action="${pageContext.request.contextPath}/HomeController">
                     <button type="submit" name="action" value="login" class="btn btn-primary btn-lg login_button">Login</button>
                 </form>

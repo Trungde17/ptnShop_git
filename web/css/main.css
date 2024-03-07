@@ -1,6 +1,13 @@
 
 
 /*css phần ô chọn login hay register*/
+.cursor_pointer{
+    cursor: pointer;
+}
+
+.nav_component{
+    padding: 0px 15px;
+}
 #modal_access{
     position: fixed;
     top: 0;
@@ -37,7 +44,7 @@
     border-radius: 5px;
     background-color: #fff; 
     color: #999;
-    cursor: pointer;
+    
 }
 .close_button:hover{
     background-color: #ccc;
@@ -56,8 +63,11 @@
 #logout_header{
     position: absolute;
     top: 100%;
-    display: none;
+    right: 2px;
+    display: none; 
+    background-color: #fff;
 }
+
 #user_header:hover #logout_header{
     display: block;
 }
