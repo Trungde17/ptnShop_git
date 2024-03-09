@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package DAO;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -18,7 +19,7 @@ import context.DatabaseInfo;
  *
  * @author tinyl
  */
-public class LaptopDB implements DatabaseInfo{
+public class LaptopDB implements DatabaseInfo {
      public Connection getConnect(){
         try {
             Class.forName(DRIVERNAME);
@@ -39,6 +40,38 @@ public class LaptopDB implements DatabaseInfo{
     public List<Laptop> getAll(){
         List<Laptop> listLaptop = new ArrayList<>();
         String sql = "select * from Laptop";
+        try (Connection con=getConnect()){
+            BrandDB brandDB = new BrandDB();
+            CategoryDB categoryDB = new CategoryDB();
+            SpecificationDB specificationDB = new SpecificationDB();
+            PreparedStatement pt = con.prepareStatement(sql);
+            ResultSet rs = pt.executeQuery();
+             while(rs.next()){
+                listLaptop.add(new Laptop(
+                        rs.getString(1),
+                        rs.getString(2),
+                        rs.getString(3),
+                        rs.getString(4),
+                        rs.getDouble(5),
+                        rs.getDouble(6),
+                        brandDB.getBrandByID(rs.getInt(7)),
+                        categoryDB.getCategoryByID(rs.getInt(8)),
+                        rs.getString(9),
+                        rs.getInt(10),
+                        rs.getInt(11),
+                        rs.getBoolean(12),
+                        specificationDB.getSpecificationByLaptopID(rs.getString(1))));    
+            }
+            con.close();
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return listLaptop;
+    }
+    
+     public List<Laptop> getAllAvailableLaptop(){
+        List<Laptop> listLaptop = new ArrayList<>();
+        String sql = "select * from Laptop where status = 1";
         try (Connection con=getConnect()){
             BrandDB brandDB = new BrandDB();
             CategoryDB categoryDB = new CategoryDB();
@@ -100,6 +133,8 @@ public Laptop getLaptop(String laptop_id){
         }
         return Laptop;
     }
+
+
     public boolean insert(Laptop Laptop , Specification specification){
         BrandDB brandDB = new BrandDB();
         CategoryDB categoryDB = new CategoryDB();
@@ -167,7 +202,7 @@ public Laptop getLaptop(String laptop_id){
     
     public static void main(String[] args){
         LaptopDB bdb = new LaptopDB();       
-        for(Laptop u : bdb.getAll()){
+        for(Laptop u : bdb.getAllAvailableLaptop()){
             System.out.println(u.toString());
         }
         System.out.println(bdb.getLaptop("levleg021xx1").toString());
