@@ -14,23 +14,25 @@ public class Laptop {
     private String laptop_id;
     private String laptop_name;
     private String laptop_img;
+    private String color;
     private double purchase_price;
     private double selling_price;
-    private int brand_id;
-    private int category_id;
+    private String brand_name;
+    private String category_name;
     private String describe;
     private int tax;
     private int deposit;
     private boolean status;
 
-    public Laptop(String laptop_id, String laptop_name, String laptop_img, double purchase_price, double selling_price, int brand_id, int category_id, String describe, int tax, int deposit, boolean status) {
+    public Laptop(String laptop_id, String laptop_name, String laptop_img, String color, double purchase_price, double selling_price, String brand_name, String category_name, String describe, int tax, int deposit, boolean status) {
         this.laptop_id = laptop_id;
         this.laptop_name = laptop_name;
         this.laptop_img = laptop_img;
+        this.color = color;
         this.purchase_price = purchase_price;
         this.selling_price = selling_price;
-        this.brand_id = brand_id;
-        this.category_id = category_id;
+        this.brand_name = brand_name;
+        this.category_name = category_name;
         this.describe = describe;
         this.tax = tax;
         this.deposit = deposit;
@@ -77,21 +79,7 @@ public class Laptop {
         this.selling_price = selling_price;
     }
 
-    public int getBrand_id() {
-        return brand_id;
-    }
-
-    public void setBrand_id(int brand_id) {
-        this.brand_id = brand_id;
-    }
-
-    public int getCategory_id() {
-        return category_id;
-    }
-
-    public void setCategory_id(int category_id) {
-        this.category_id = category_id;
-    }
+  
 
     public String getDescribe() {
         return describe;
@@ -125,9 +113,33 @@ public class Laptop {
         this.status = status;
     }
 
+    public String getBrand_name() {
+        return brand_name;
+    }
+
+    public void setBrand_name(String brand_name) {
+        this.brand_name = brand_name;
+    }
+
+    public String getCategory_name() {
+        return category_name;
+    }
+
+    public void setCategory_name(String category_name) {
+        this.category_name = category_name;
+    }
+
+    public void setColor(String color) {
+        this.color = color;
+    }
+
+    public String getColor() {
+        return color;
+    }
+
     @Override
     public int hashCode() {
-        int hash = 7;
+        int hash = 3;
         return hash;
     }
 
@@ -149,12 +161,6 @@ public class Laptop {
         if (Double.doubleToLongBits(this.selling_price) != Double.doubleToLongBits(other.selling_price)) {
             return false;
         }
-        if (this.brand_id != other.brand_id) {
-            return false;
-        }
-        if (this.category_id != other.category_id) {
-            return false;
-        }
         if (this.tax != other.tax) {
             return false;
         }
@@ -173,11 +179,21 @@ public class Laptop {
         if (!Objects.equals(this.laptop_img, other.laptop_img)) {
             return false;
         }
+        if (!Objects.equals(this.color, other.color)) {
+            return false;
+        }
+        if (!Objects.equals(this.brand_name, other.brand_name)) {
+            return false;
+        }
+        if (!Objects.equals(this.category_name, other.category_name)) {
+            return false;
+        }
         return Objects.equals(this.describe, other.describe);
     }
 
     @Override
     public String toString() {
-        return "Laptop{" + "laptop_id=" + laptop_id + ", laptop_name=" + laptop_name + ", laptop_img=" + laptop_img + ", purchase_price=" + purchase_price + ", selling_price=" + selling_price + ", brand_id=" + brand_id + ", category_id=" + category_id + ", describe=" + describe + ", tax=" + tax + ", deposit=" + deposit + ", status=" + status + '}';
+        return "Laptop{" + "laptop_id=" + laptop_id + ", laptop_name=" + laptop_name + ", laptop_img=" + laptop_img + ", color=" + color + ", purchase_price=" + purchase_price + ", selling_price=" + selling_price + ", brand_name=" + brand_name + ", category_name=" + category_name + ", describe=" + describe + ", tax=" + tax + ", deposit=" + deposit + ", status=" + status + '}';
     }
+    
 }

@@ -5,7 +5,6 @@
 package Dao;
 
 import context.DatabaseInfo;
-import static context.DatabaseInfo.DRIVERNAME;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -39,7 +38,7 @@ public class LaptopDB implements DatabaseInfo{
     
     public List<Laptop> getAll(){
         List<Laptop> listLaptop = new ArrayList<>();
-        String sql = "Select * from Laptop";
+        String sql = "exec SelectLaptopDetails";
         try (Connection con=getConnect()){
             PreparedStatement pt = con.prepareStatement(sql);
             ResultSet rs = pt.executeQuery();
@@ -48,14 +47,15 @@ public class LaptopDB implements DatabaseInfo{
                         rs.getString(1),
                         rs.getString(2),
                         rs.getString(3),
-                        rs.getDouble(4),
+                        rs.getString(4),
                         rs.getDouble(5),
-                        rs.getInt(6),
-                        rs.getInt(7),
+                        rs.getDouble(6),
+                        rs.getString(7),
                         rs.getString(8),
-                        rs.getInt(9),
+                        rs.getString(9),
                         rs.getInt(10),
-                        rs.getBoolean(11)));    
+                        rs.getInt(11),
+                        rs.getBoolean(12)));    
             }
             con.close();
         } catch (SQLException e) {
@@ -66,7 +66,7 @@ public class LaptopDB implements DatabaseInfo{
     
 public Laptop getLaptop(String laptop_id){
         Laptop Laptop = null;
-        String sql = "select * from Laptop where laptop_id=?";       
+        String sql = "exec SelectLaptopDetailsByID @laptop_id =?";       
         try(Connection con=getConnect()){
             PreparedStatement pt = con.prepareStatement(sql);
             pt.setString(1, laptop_id);
@@ -76,14 +76,15 @@ public Laptop getLaptop(String laptop_id){
                         rs.getString(1),
                         rs.getString(2),
                         rs.getString(3),
-                        rs.getDouble(4),
+                        rs.getString(4),
                         rs.getDouble(5),
-                        rs.getInt(6),
-                        rs.getInt(7),
+                        rs.getDouble(6),
+                        rs.getString(7),
                         rs.getString(8),
-                        rs.getInt(9),
+                        rs.getString(9),
                         rs.getInt(10),
-                        rs.getBoolean(11));    
+                        rs.getInt(11),
+                        rs.getBoolean(12));
                 con.close();
             }
         } catch (SQLException e) {
@@ -93,19 +94,21 @@ public Laptop getLaptop(String laptop_id){
     }
     public int insert(Laptop Laptop){
         try(Connection con=getConnect()) {
-            PreparedStatement pt=con.prepareStatement("insert into Laptop values(?, ?, ?, ?, ?, ?, ?, ?, ?)");
+            PreparedStatement pt=con.prepareStatement("exec InsertIntoLaptop  @laptop_id ='?', @laptop_name = '?', @laptop_img = '?',\n" +
+"@color = '?', @purchase_price = ?, @selling_price = ?, @brand_name = '?', @category_name = '?', @describe ='', @tax = ?, @deposit = ?, @status = ?");
  //String laptop_id, String laptop_name, String laptop_img, double purchase_price, double selling_price, int brand_id, int category_id, String describe, int tax, int deposit, boolean status
             pt.setString(1, Laptop.getLaptop_id());
             pt.setString(2, Laptop.getLaptop_name());
             pt.setString(3, Laptop.getLaptop_img());
-            pt.setDouble(4, Laptop.getPurchase_price());
-            pt.setDouble(5, Laptop.getSelling_price());
-            pt.setInt(6, Laptop.getBrand_id());
-            pt.setInt(7, Laptop.getCategory_id());
-            pt.setString(8, Laptop.getDescribe());
-            pt.setInt(9, Laptop.getTax());
-            pt.setInt(10, Laptop.getDeposit());
-            pt.setBoolean(11, Laptop.isStatus());
+            pt.setString(4, Laptop.getColor());
+            pt.setDouble(5, Laptop.getPurchase_price());
+            pt.setDouble(6, Laptop.getSelling_price());
+            pt.setString(7, Laptop.getBrand_name());
+            pt.setString(8, Laptop.getCategory_name());
+            pt.setString(9, Laptop.getDescribe());
+            pt.setInt(10, Laptop.getTax());
+            pt.setInt(11, Laptop.getDeposit());
+            pt.setBoolean(12, Laptop.isStatus());
             pt.executeUpdate();
         } catch (Exception e) {
             System.out.println(e);
@@ -113,12 +116,13 @@ public Laptop getLaptop(String laptop_id){
         }
         return 1;
     }
-    public int countLaptop(){
+    public int getAmountOfLaptopName(String laptop_name){
         int number=0;
         try (Connection con = getConnect()){
-            PreparedStatement pt=con.prepareStatement("select count(Laptop_id) as count from Laptop");
+            PreparedStatement pt=con.prepareStatement("select dbo.getAmountOfLaptopName (?)");
+            pt.setString(1, laptop_name);
             ResultSet rs=pt.executeQuery();
-            if(rs.next())number=rs.getInt("count");
+            if(rs.next())number=rs.getInt(1);
             con.close();
         } catch (Exception e) {
             System.out.println(e);
@@ -139,14 +143,15 @@ public Laptop getLaptop(String laptop_id){
                         rs.getString(1),
                         rs.getString(2),
                         rs.getString(3),
-                        rs.getDouble(4),
+                        rs.getString(4),
                         rs.getDouble(5),
-                        rs.getInt(6),
-                        rs.getInt(7),
+                        rs.getDouble(6),
+                        rs.getString(7),
                         rs.getString(8),
-                        rs.getInt(9),
+                        rs.getString(9),
                         rs.getInt(10),
-                        rs.getBoolean(11));           
+                        rs.getInt(11),
+                        rs.getBoolean(12));       
             }           
             con.close();
         } catch (Exception e) {
@@ -160,9 +165,9 @@ public Laptop getLaptop(String laptop_id){
         for(Laptop u : bdb.getAll()){
             System.out.println(u.toString());
         }
-         System.out.println(bdb.getLaptop("levleg021xx1").toString());
-        System.out.println(bdb.countLaptop());
-        
+        System.out.println(bdb.getLaptop("levleg021xx1").toString());
+       System.out.println(bdb.getAmountOfLaptopName("Dell XPS 13"));
+//        
     }
 }
 
