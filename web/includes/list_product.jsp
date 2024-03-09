@@ -46,8 +46,11 @@
                         
                         <!-- index plus -->
                         <c:set var="index" value="${index+1}" scope="page"></c:set>   
-                        
+                            
+                            <!-- go to laptopDetail.jsp -->
                             <a class="card" style="text-decoration: none" href="includes/test.jsp?laptop_id=${laptop.laptop_id}">
+                            
+                            
                             <div class="d-flex justify-content-between p-3">
                                 <p class="lead mb-0">Today's Combo Offer</p>
                                 <div
