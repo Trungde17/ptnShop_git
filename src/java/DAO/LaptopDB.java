@@ -2,8 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package Dao;
-
+package DAO;
 import context.DatabaseInfo;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -38,8 +37,10 @@ public class LaptopDB implements DatabaseInfo{
     
     public List<Laptop> getAll(){
         List<Laptop> listLaptop = new ArrayList<>();
-        String sql = "exec SelectLaptopDetails";
+        String sql = "select * from Laptop";
         try (Connection con=getConnect()){
+            BrandDB brandDB = new BrandDB();
+            CategoryDB categoryDB = new CategoryDB();
             PreparedStatement pt = con.prepareStatement(sql);
             ResultSet rs = pt.executeQuery();
              while(rs.next()){
@@ -50,8 +51,8 @@ public class LaptopDB implements DatabaseInfo{
                         rs.getString(4),
                         rs.getDouble(5),
                         rs.getDouble(6),
-                        rs.getString(7),
-                        rs.getString(8),
+                        brandDB.getBrandByID(rs.getInt(7)),
+                        categoryDB.getCategoryByID(rs.getInt(8)),
                         rs.getString(9),
                         rs.getInt(10),
                         rs.getInt(11),
@@ -66,8 +67,10 @@ public class LaptopDB implements DatabaseInfo{
     
 public Laptop getLaptop(String laptop_id){
         Laptop Laptop = null;
-        String sql = "exec SelectLaptopDetailsByID @laptop_id =?";       
+        String sql = "select * from laptop where laptop_id=?";       
         try(Connection con=getConnect()){
+            BrandDB brandDB = new BrandDB();
+            CategoryDB categoryDB = new CategoryDB();
             PreparedStatement pt = con.prepareStatement(sql);
             pt.setString(1, laptop_id);
             ResultSet rs = pt.executeQuery();
@@ -79,8 +82,8 @@ public Laptop getLaptop(String laptop_id){
                         rs.getString(4),
                         rs.getDouble(5),
                         rs.getDouble(6),
-                        rs.getString(7),
-                        rs.getString(8),
+                        brandDB.getBrandByID(rs.getInt(7)),
+                        categoryDB.getCategoryByID(rs.getInt(8)),
                         rs.getString(9),
                         rs.getInt(10),
                         rs.getInt(11),
@@ -94,8 +97,7 @@ public Laptop getLaptop(String laptop_id){
     }
     public int insert(Laptop Laptop){
         try(Connection con=getConnect()) {
-            PreparedStatement pt=con.prepareStatement("exec InsertIntoLaptop  @laptop_id ='?', @laptop_name = '?', @laptop_img = '?',\n" +
-"@color = '?', @purchase_price = ?, @selling_price = ?, @brand_name = '?', @category_name = '?', @describe ='', @tax = ?, @deposit = ?, @status = ?");
+            PreparedStatement pt=con.prepareStatement("insert into laptop laptop values  ('?', '?', '?','?', ?, ?, ?, ?, '?', ?, ?, ?),");
  //String laptop_id, String laptop_name, String laptop_img, double purchase_price, double selling_price, int brand_id, int category_id, String describe, int tax, int deposit, boolean status
             pt.setString(1, Laptop.getLaptop_id());
             pt.setString(2, Laptop.getLaptop_name());
@@ -103,8 +105,8 @@ public Laptop getLaptop(String laptop_id){
             pt.setString(4, Laptop.getColor());
             pt.setDouble(5, Laptop.getPurchase_price());
             pt.setDouble(6, Laptop.getSelling_price());
-            pt.setString(7, Laptop.getBrand_name());
-            pt.setString(8, Laptop.getCategory_name());
+            pt.setInt(7, Laptop.getBrand().getBrand_id());
+            pt.setInt(8, Laptop.getCategory().getCategory_id());
             pt.setString(9, Laptop.getDescribe());
             pt.setInt(10, Laptop.getTax());
             pt.setInt(11, Laptop.getDeposit());
@@ -129,36 +131,7 @@ public Laptop getLaptop(String laptop_id){
         }
         return number;
     }
-    
-    public Laptop getLaptop(String attribute, String value){
-        Laptop laptop=null;
-        
-        try (Connection con = getConnect()){
-            PreparedStatement pt=con.prepareStatement("select * from Laptop where " + attribute + "=?");
-            
-            pt.setString(1, value);
-            ResultSet rs=pt.executeQuery();
-            if(rs.next()){
-                laptop = new Laptop(
-                        rs.getString(1),
-                        rs.getString(2),
-                        rs.getString(3),
-                        rs.getString(4),
-                        rs.getDouble(5),
-                        rs.getDouble(6),
-                        rs.getString(7),
-                        rs.getString(8),
-                        rs.getString(9),
-                        rs.getInt(10),
-                        rs.getInt(11),
-                        rs.getBoolean(12));       
-            }           
-            con.close();
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-        return laptop;
-    }
+   
     
     public static void main(String[] args){
         LaptopDB bdb = new LaptopDB();       

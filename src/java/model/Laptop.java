@@ -17,22 +17,22 @@ public class Laptop {
     private String color;
     private double purchase_price;
     private double selling_price;
-    private String brand_name;
-    private String category_name;
+    private final Brand brand;
+    private final Category category;
     private String describe;
     private int tax;
     private int deposit;
     private boolean status;
 
-    public Laptop(String laptop_id, String laptop_name, String laptop_img, String color, double purchase_price, double selling_price, String brand_name, String category_name, String describe, int tax, int deposit, boolean status) {
+    public Laptop(String laptop_id, String laptop_name, String laptop_img, String color, double purchase_price, double selling_price, Brand brand, Category category, String describe, int tax, int deposit, boolean status) {
         this.laptop_id = laptop_id;
         this.laptop_name = laptop_name;
         this.laptop_img = laptop_img;
         this.color = color;
         this.purchase_price = purchase_price;
         this.selling_price = selling_price;
-        this.brand_name = brand_name;
-        this.category_name = category_name;
+        this.brand = brand;
+        this.category = category;
         this.describe = describe;
         this.tax = tax;
         this.deposit = deposit;
@@ -113,21 +113,15 @@ public class Laptop {
         this.status = status;
     }
 
-    public String getBrand_name() {
-        return brand_name;
+    public Brand getBrand() {
+        return brand;
     }
 
-    public void setBrand_name(String brand_name) {
-        this.brand_name = brand_name;
+    public Category getCategory() {
+        return category;
     }
 
-    public String getCategory_name() {
-        return category_name;
-    }
-
-    public void setCategory_name(String category_name) {
-        this.category_name = category_name;
-    }
+    
 
     public void setColor(String color) {
         this.color = color;
@@ -139,7 +133,7 @@ public class Laptop {
 
     @Override
     public int hashCode() {
-        int hash = 3;
+        int hash = 5;
         return hash;
     }
 
@@ -182,18 +176,20 @@ public class Laptop {
         if (!Objects.equals(this.color, other.color)) {
             return false;
         }
-        if (!Objects.equals(this.brand_name, other.brand_name)) {
+        if (!Objects.equals(this.describe, other.describe)) {
             return false;
         }
-        if (!Objects.equals(this.category_name, other.category_name)) {
+        if (!Objects.equals(this.brand, other.brand)) {
             return false;
         }
-        return Objects.equals(this.describe, other.describe);
+        return Objects.equals(this.category, other.category);
     }
 
     @Override
     public String toString() {
-        return "Laptop{" + "laptop_id=" + laptop_id + ", laptop_name=" + laptop_name + ", laptop_img=" + laptop_img + ", color=" + color + ", purchase_price=" + purchase_price + ", selling_price=" + selling_price + ", brand_name=" + brand_name + ", category_name=" + category_name + ", describe=" + describe + ", tax=" + tax + ", deposit=" + deposit + ", status=" + status + '}';
+        return "Laptop{" + "laptop_id=" + laptop_id + ", laptop_name=" + laptop_name + ", laptop_img=" + laptop_img + ", color=" + color + ", purchase_price=" + purchase_price + ", selling_price=" + selling_price + ", brand=" + brand + ", category=" + category + ", describe=" + describe + ", tax=" + tax + ", deposit=" + deposit + ", status=" + status + '}';
     }
+
+   
     
 }
