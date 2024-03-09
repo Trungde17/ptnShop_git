@@ -11,10 +11,12 @@ package model;
 public class Brand {
     private int brand_id;
     private String brand_name;
+    private String country;
 
-    public Brand(int brand_id, String brand_name) {
+    public Brand(int brand_id, String brand_name, String country) {
         this.brand_id = brand_id;
         this.brand_name = brand_name;
+        this.country = country;
     }
 
     public int getBrand_id() {
@@ -33,6 +35,15 @@ public class Brand {
         this.brand_name = brand_name;
     }
 
+    public String getCountry() {
+        return country;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
+    }
+    
+    
     @Override
     public String toString() {
         return "Brand{" + "brand_name=" + brand_name + '}';

@@ -3,7 +3,6 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package DAO;
-import context.DatabaseInfo;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -11,8 +10,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import model.Brand;
 import model.Laptop;
-
+import model.Specification;
+import context.DatabaseInfo;
 /**
  *
  * @author tinyl
@@ -41,6 +42,7 @@ public class LaptopDB implements DatabaseInfo{
         try (Connection con=getConnect()){
             BrandDB brandDB = new BrandDB();
             CategoryDB categoryDB = new CategoryDB();
+            SpecificationDB specificationDB = new SpecificationDB();
             PreparedStatement pt = con.prepareStatement(sql);
             ResultSet rs = pt.executeQuery();
              while(rs.next()){
@@ -56,7 +58,8 @@ public class LaptopDB implements DatabaseInfo{
                         rs.getString(9),
                         rs.getInt(10),
                         rs.getInt(11),
-                        rs.getBoolean(12)));    
+                        rs.getBoolean(12),
+                        specificationDB.getSpecificationByLaptopID(rs.getString(1))));    
             }
             con.close();
         } catch (SQLException e) {
@@ -71,6 +74,7 @@ public Laptop getLaptop(String laptop_id){
         try(Connection con=getConnect()){
             BrandDB brandDB = new BrandDB();
             CategoryDB categoryDB = new CategoryDB();
+            SpecificationDB specificationDB = new SpecificationDB();
             PreparedStatement pt = con.prepareStatement(sql);
             pt.setString(1, laptop_id);
             ResultSet rs = pt.executeQuery();
@@ -87,7 +91,8 @@ public Laptop getLaptop(String laptop_id){
                         rs.getString(9),
                         rs.getInt(10),
                         rs.getInt(11),
-                        rs.getBoolean(12));
+                        rs.getBoolean(12),
+                        specificationDB.getSpecificationByLaptopID(rs.getString(1)));
                 con.close();
             }
         } catch (SQLException e) {
@@ -95,7 +100,18 @@ public Laptop getLaptop(String laptop_id){
         }
         return Laptop;
     }
-    public int insert(Laptop Laptop){
+    public boolean insert(Laptop Laptop , Specification specification){
+        BrandDB brandDB = new BrandDB();
+        CategoryDB categoryDB = new CategoryDB();
+        if(brandDB.getBrandByID(Laptop.getBrand().getBrand_id())==null) {
+            System.out.println("brand does not exist");
+            return false;
+        }
+        if(categoryDB.getCategoryByID(Laptop.getCategory().getCategory_id())==null) {
+            System.out.println("category does not exist");
+            return false;
+        }
+        
         try(Connection con=getConnect()) {
             PreparedStatement pt=con.prepareStatement("insert into laptop laptop values  ('?', '?', '?','?', ?, ?, ?, ?, '?', ?, ?, ?),");
  //String laptop_id, String laptop_name, String laptop_img, double purchase_price, double selling_price, int brand_id, int category_id, String describe, int tax, int deposit, boolean status
@@ -112,11 +128,27 @@ public Laptop getLaptop(String laptop_id){
             pt.setInt(11, Laptop.getDeposit());
             pt.setBoolean(12, Laptop.isStatus());
             pt.executeUpdate();
+            
+            pt=con.prepareStatement("insert into Specifications values  ('?', '?', '?','?', '?', '?', '?', '?', '?', '?', '?','?'),");
+ //String laptop_id, String laptop_name, String laptop_img, double purchase_price, double selling_price, int brand_id, int category_id, String describe, int tax, int deposit, boolean status
+            pt.setString(1, Laptop.getLaptop_id());
+            pt.setString(2, specification.getMaterial());
+            pt.setString(3, specification.getScreen());
+            pt.setString(4, specification.getCpu());
+            pt.setString(5, specification.getRam());
+            pt.setString(6, specification.getHard_drive());
+            pt.setString(7, specification.getGraphics());
+            pt.setString(8, specification.getOs());
+            pt.setString(9, specification.getWeight());
+            pt.setString(10, specification.getSize());
+            pt.setString(11, specification.getOrigin());
+            pt.setInt(12, specification.getLaunch_year());
+            pt.executeUpdate();
         } catch (Exception e) {
             System.out.println(e);
-            return 0;
+            return false;
         }
-        return 1;
+        return true;
     }
     public int getAmountOfLaptopName(String laptop_name){
         int number=0;

@@ -44,7 +44,8 @@ public class BrandDB implements DatabaseInfo{
              while(rs.next()){
                 listBrand.add(new Brand(
                         rs.getInt(1),
-                        rs.getString(2)));    
+                        rs.getString(2),
+                        rs.getString(3)));    
             }
             con.close();
         } catch (SQLException e) {
@@ -63,7 +64,8 @@ public class BrandDB implements DatabaseInfo{
             if(rs.next()){
                 brand = new Brand(
                         rs.getInt(1),
-                        rs.getString(2));
+                        rs.getString(2),
+                        rs.getString(3));  
                 con.close();
             }
         } catch (SQLException e) {
@@ -74,9 +76,10 @@ public class BrandDB implements DatabaseInfo{
     
     public boolean insert(Brand brand){
         try(Connection con=getConnect()) {
-            PreparedStatement pt=con.prepareStatement("insert into brand values(?, ?)");
+            PreparedStatement pt=con.prepareStatement("insert into brand values(?, ?, ?)");
             pt.setInt(1, brand.getBrand_id());
-            pt.setString(2, brand.getBrand_name());    
+            pt.setString(2, brand.getBrand_name());   
+            pt.setString(2, brand.getCountry());    
             pt.executeUpdate();
         } catch (Exception e) {
             System.out.println(e);

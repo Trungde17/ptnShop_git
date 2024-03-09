@@ -23,8 +23,9 @@ public class Laptop {
     private int tax;
     private int deposit;
     private boolean status;
+    private Specification specification;
 
-    public Laptop(String laptop_id, String laptop_name, String laptop_img, String color, double purchase_price, double selling_price, Brand brand, Category category, String describe, int tax, int deposit, boolean status) {
+    public Laptop(String laptop_id, String laptop_name, String laptop_img, String color, double purchase_price, double selling_price, Brand brand, Category category, String describe, int tax, int deposit, boolean status, Specification specificaion) {
         this.laptop_id = laptop_id;
         this.laptop_name = laptop_name;
         this.laptop_img = laptop_img;
@@ -37,6 +38,7 @@ public class Laptop {
         this.tax = tax;
         this.deposit = deposit;
         this.status = status;
+        this.specification = specificaion;
     }
 
     public String getLaptop_id() {
@@ -131,9 +133,30 @@ public class Laptop {
         return color;
     }
 
+    public Specification getSpecification() {
+        return specification;
+    }
+
+    public void setSpecification(Specification specification) {
+        this.specification = specification;
+    }
+
     @Override
     public int hashCode() {
-        int hash = 5;
+        int hash = 3;
+        hash = 97 * hash + Objects.hashCode(this.laptop_id);
+        hash = 97 * hash + Objects.hashCode(this.laptop_name);
+        hash = 97 * hash + Objects.hashCode(this.laptop_img);
+        hash = 97 * hash + Objects.hashCode(this.color);
+        hash = 97 * hash + (int) (Double.doubleToLongBits(this.purchase_price) ^ (Double.doubleToLongBits(this.purchase_price) >>> 32));
+        hash = 97 * hash + (int) (Double.doubleToLongBits(this.selling_price) ^ (Double.doubleToLongBits(this.selling_price) >>> 32));
+        hash = 97 * hash + Objects.hashCode(this.brand);
+        hash = 97 * hash + Objects.hashCode(this.category);
+        hash = 97 * hash + Objects.hashCode(this.describe);
+        hash = 97 * hash + this.tax;
+        hash = 97 * hash + this.deposit;
+        hash = 97 * hash + (this.status ? 1 : 0);
+        hash = 97 * hash + Objects.hashCode(this.specification);
         return hash;
     }
 
@@ -182,14 +205,14 @@ public class Laptop {
         if (!Objects.equals(this.brand, other.brand)) {
             return false;
         }
-        return Objects.equals(this.category, other.category);
+        if (!Objects.equals(this.category, other.category)) {
+            return false;
+        }
+        return Objects.equals(this.specification, other.specification);
     }
 
     @Override
     public String toString() {
-        return "Laptop{" + "laptop_id=" + laptop_id + ", laptop_name=" + laptop_name + ", laptop_img=" + laptop_img + ", color=" + color + ", purchase_price=" + purchase_price + ", selling_price=" + selling_price + ", brand=" + brand + ", category=" + category + ", describe=" + describe + ", tax=" + tax + ", deposit=" + deposit + ", status=" + status + '}';
-    }
-
-   
-    
+        return "Laptop{" + "laptop_id=" + laptop_id + ", laptop_name=" + laptop_name + ", laptop_img=" + laptop_img + ", color=" + color + ", purchase_price=" + purchase_price + ", selling_price=" + selling_price + ", brand=" + brand.getBrand_name() + ", category=" + category.getCategory_name() + ", describe=" + describe + ", tax=" + tax + ", deposit=" + deposit + ", status=" + status + ", material=" + specification.getMaterial() + '}';
+    } 
 }
