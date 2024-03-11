@@ -10,8 +10,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.List;
-import model.Brand;
 import model.Laptop;
 import model.Specification;
 import context.DatabaseInfo;
@@ -19,7 +17,7 @@ import context.DatabaseInfo;
  *
  * @author tinyl
  */
-public class LaptopDB implements DatabaseInfo {
+public class LaptopDB implements  DatabaseInfo{
      public Connection getConnect(){
         try {
             Class.forName(DRIVERNAME);
@@ -37,8 +35,8 @@ public class LaptopDB implements DatabaseInfo {
         return null;
     }
     
-    public List<Laptop> getAll(){
-        List<Laptop> listLaptop = new ArrayList<>();
+    public ArrayList<Laptop> getAll(){
+        ArrayList<Laptop> listLaptop = new ArrayList<>();
         String sql = "select * from Laptop";
         try (Connection con=getConnect()){
             BrandDB brandDB = new BrandDB();
@@ -69,8 +67,8 @@ public class LaptopDB implements DatabaseInfo {
         return listLaptop;
     }
     
-     public List<Laptop> getAllAvailableLaptop(){
-        List<Laptop> listLaptop = new ArrayList<>();
+     public ArrayList<Laptop> getAllAvailableLaptop(){
+        ArrayList<Laptop> listLaptop = new ArrayList<>();
         String sql = "select * from Laptop where status = 1";
         try (Connection con=getConnect()){
             BrandDB brandDB = new BrandDB();
@@ -201,12 +199,12 @@ public Laptop getLaptop(String laptop_id){
    
     
     public static void main(String[] args){
-        LaptopDB bdb = new LaptopDB();       
-        for(Laptop u : bdb.getAllAvailableLaptop()){
-            System.out.println(u.toString());
-        }
-        System.out.println(bdb.getLaptop("levleg021xx1").toString());
-       System.out.println(bdb.getAmountOfLaptopName("Dell XPS 13"));
+        LaptopDB bdb = new LaptopDB(); 
+        ArrayList<Laptop>list=bdb.getAllAvailableLaptop();
+       for(Laptop laptop : list){
+        System.out.println(laptop);
+    } 
+        
 //        
     }
 }

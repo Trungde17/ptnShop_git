@@ -11,3 +11,8 @@ function closeLoginAndRegister(){
 function redirectToJSPPage(url) {
     window.location.href = url;
 }
+
+function redirectToJSPPageWithPara(url, attribute, value){
+    urlPara = url + "?" + attribute + "=" + value;
+    window.location.href = urlPara;
+}

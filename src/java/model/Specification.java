@@ -33,6 +33,7 @@ public class Specification {
         this.size = size;
         this.origin = origin;
         this.launch_year = launch_year;
+
     }
 
     public String getScreen() {

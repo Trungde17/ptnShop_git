@@ -73,6 +73,15 @@
 #user_header:hover #logout_header{
     display: block;
 }
+.laptop:hover{
+    border: #28a745 solid 5px;
+}
+.laptop_title{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 50px; 
+}
 @keyframes modalFadeIn{
     from{
         opacity: 0;

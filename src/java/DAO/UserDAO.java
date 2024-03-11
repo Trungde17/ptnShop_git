@@ -40,6 +40,7 @@ public class UserDAO implements DatabaseInfo{
             Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, e);
             return 0;
         }
+        
         return 1;
     }
     // get user bằng email, pass và user_type
@@ -130,11 +131,13 @@ public class UserDAO implements DatabaseInfo{
                 u.setPhone(rs.getString("phone"));
                 u.setRegistration_date(rs.getDate("registration_date"));
                 list.add(u);
+                
             }
             con.close();
         } catch (Exception e) {
             Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, e);
         }
+        
         return list;
     }
     
