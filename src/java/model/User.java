@@ -103,6 +103,9 @@ public class User {
         this.address = address;
     }
     
+    public String getFullName(){
+        return first_name + " " + last_name;
+    }
     
     @Override
     public int hashCode() {

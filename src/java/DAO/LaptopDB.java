@@ -13,12 +13,13 @@ import java.util.ArrayList;
 import model.Laptop;
 import model.Specification;
 import context.DatabaseInfo;
+import model.Brand;
 /**
  *
  * @author tinyl
  */
 public class LaptopDB implements  DatabaseInfo{
-     public Connection getConnect(){
+     public static Connection getConnect(){
         try {
             Class.forName(DRIVERNAME);
         } catch (ClassNotFoundException e) {
@@ -99,7 +100,7 @@ public class LaptopDB implements  DatabaseInfo{
         return listLaptop;
     }
     
-public Laptop getLaptop(String laptop_id){
+public static Laptop getLaptop(String laptop_id){
         Laptop Laptop = null;
         String sql = "select * from laptop where laptop_id=?";       
         try(Connection con=getConnect()){
@@ -197,16 +198,57 @@ public Laptop getLaptop(String laptop_id){
         return number;
     }
    
+    public static int changeStatusOfBuyLaptops(ArrayList<Laptop>list){
+        int number=0;
+        try (Connection con=getConnect()){
+            PreparedStatement stmt=con.prepareStatement("update laptop set status=0 where laptop_id=?");
+            for(Laptop laptop:list){
+                stmt.setString(1, laptop.getLaptop_id());
+                stmt.executeUpdate();
+                number++;
+            }
+            con.close();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return number;
+    }
     
+    public static ArrayList<Laptop>searchBaseName(String name){
+        
+        try(Connection con=getConnect()) {
+           ArrayList<Laptop>list=new ArrayList<>(); 
+           PreparedStatement stmt=con.prepareStatement("select * from laptop where laptop_name like ?");
+           stmt.setString(1, "%" + name + "%");
+           ResultSet rs=stmt.executeQuery();
+           while(rs.next()){
+               Laptop laptop=new Laptop(rs.getString(1),
+                       rs.getString(2),
+                       rs.getString(3),
+                       rs.getString(4),
+                       rs.getDouble(5),
+                       rs.getDouble(6),
+                       BrandDB.getBrandByID(rs.getInt(7)), 
+                       CategoryDB.getCategoryByID(rs.getInt(8)),
+                       rs.getString(9),
+                       rs.getInt(10),
+                       rs.getInt(11),
+                       rs.getBoolean(12),
+                       SpecificationDB.getSpecificationByLaptopID(rs.getString(1)));
+               list.add(laptop);           
+           }
+           con.close();
+           return list;
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return null;
+    }
     public static void main(String[] args){
-        LaptopDB bdb = new LaptopDB(); 
-        ArrayList<Laptop>list=bdb.getAllAvailableLaptop();
-       for(Laptop laptop : list){
-        System.out.println(laptop);
+        System.out.println(searchBaseName("dell"));
     } 
         
-//        
-    }
+  
 }
 
 

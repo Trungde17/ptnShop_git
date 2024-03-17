@@ -18,7 +18,7 @@ import model.Specification;
  * @author tinyl
  */
 public class SpecificationDB implements DatabaseInfo{
-    public Connection getConnect(){
+    public static Connection getConnect(){
         try {
             Class.forName(DRIVERNAME);
         } catch (ClassNotFoundException e) {
@@ -35,7 +35,7 @@ public class SpecificationDB implements DatabaseInfo{
         return null;
     }
    
-    public Specification getSpecificationByLaptopID(String laptop_id){
+    public static Specification getSpecificationByLaptopID(String laptop_id){
         Specification Specification = null;
         String sql = "select * from [specifications] where laptop_id=?";       
         try(Connection con=getConnect()){

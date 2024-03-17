@@ -3,6 +3,7 @@ package DAO;
 import context.DatabaseInfo;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.User;
@@ -57,7 +58,7 @@ public class UserDAO implements DatabaseInfo{
                 user.setUser_id(rs.getString("user_id"));
                 user.setUser_type(rs.getBoolean("user_type"));
                 user.setFirst_name(rs.getString("first_name"));
-                user.setFirst_name(rs.getString("last_name"));
+                user.setLast_name(rs.getString("last_name"));
                 user.setEmail(rs.getString("email"));
                 user.setPassword(rs.getString("password"));
                 user.setAddress(rs.getString("address"));
@@ -140,7 +141,39 @@ public class UserDAO implements DatabaseInfo{
         
         return list;
     }
-    
+    public List<User> getAllEmployee(){
+        List<User> listUser = new ArrayList<>();
+        String sql = "Select * from tblUSER where user_type = 'true'";
+        try (Connection con=getConnect()){
+            PreparedStatement pt = con.prepareStatement(sql);
+            ResultSet rs = pt.executeQuery();
+             while(rs.next()){
+                listUser.add(new User(rs.getString(1),rs.getBoolean(2),rs.getString(3),rs.getString(4),rs.getString(5),
+                rs.getString(6), rs.getString(7), rs.getString(8), rs.getDate(9)));
+            }
+            con.close();
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return listUser;
+    }
+    public User getUserByID(String id){
+        User user = null;
+        String sql = "select * from tblUSER where id= ?";       
+        try(Connection con=getConnect()){
+            PreparedStatement pt = con.prepareStatement(sql);
+            pt.setString(1, id);
+            ResultSet rs = pt.executeQuery();
+            if(rs.next()){
+                user = new User(rs.getString(1),rs.getBoolean(2),rs.getString(3),rs.getString(4),rs.getString(5),
+                rs.getString(6), rs.getString(7), rs.getString(8), rs.getDate(9));
+                con.close();
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return user;
+    }
     public static void main(String[] args) {
         System.out.println(getUser("email","tanChun2003@gmail.com"));
         User u=new User("user3", false, "trung", "thanh", "thanhTrung03@gmail.com", "12345", "Quang Nam", "039813243", new java.util.Date());

@@ -1,0 +1,26 @@
+#cart-form{
+    position: relative;
+}
+.card-back{
+    position: absolute;
+    top: 5px;
+    left: 5px;
+}
+
+.card-back i{
+    font-size: 25px;
+}
+.cart-title{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.delete-laptop{
+    background-color: #fff;
+    border: none;
+    cursor: pointer;
+}
+.buy-cart{
+    margin: 10px 30rem;
+}
+

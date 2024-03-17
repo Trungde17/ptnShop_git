@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="6.0" xmlns="https://jakarta.ee/xml/ns/jakartaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_6_0.xsd">
+    <filter>
+        <filter-name>LoginToUseCart</filter-name>
+        <filter-class>filter.LoginToUseCart</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>LoginToUseCart</filter-name>
+        <url-pattern>/cart/cart.jsp</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>LoginToUseCart</filter-name>
+        <url-pattern>/addcart</url-pattern>
+    </filter-mapping>
+    <filter>
+        <filter-name>LoadCart</filter-name>
+        <filter-class>filter.LoadCart</filter-class>
+    </filter>         
+    <filter-mapping>
+        <filter-name>LoadCart</filter-name>
+        <url-pattern>/cart/cart.jsp</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>LoadCart</filter-name>
+        <url-pattern>/product/product_detail.jsp</url-pattern>
+    </filter-mapping>
+    
+    
+    <filter>
+        <filter-name>servletFilter</filter-name>
+        <filter-class>filter.AuthorizationFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>servletFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+        <filter-class>filter</filter-class>
+    </filter-mapping>
+</web-app>

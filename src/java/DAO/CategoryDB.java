@@ -20,7 +20,7 @@ import model.Category;
  * @author tinyl
  */
 public class CategoryDB implements DatabaseInfo{
-    public Connection getConnect(){
+    public static Connection getConnect(){
         try {
             Class.forName(DRIVERNAME);
         } catch (ClassNotFoundException e) {
@@ -36,7 +36,7 @@ public class CategoryDB implements DatabaseInfo{
         }
         return null;
     }
-    public List<Category> getAll(){
+    public static List<Category> getAll(){
         List<Category> listCategory = new ArrayList<>();
         String sql = "select * from Category";
         try (Connection con=getConnect()){
@@ -54,7 +54,7 @@ public class CategoryDB implements DatabaseInfo{
         return listCategory;
     }
     
-    public Category getCategoryByID(int Category_id){
+    public static Category getCategoryByID(int Category_id){
         Category Category = null;
         String sql = "select * from Category where Category_id=?";       
         try(Connection con=getConnect()){
@@ -73,7 +73,7 @@ public class CategoryDB implements DatabaseInfo{
         return Category;
     }
     
-    public boolean insert(Category Category){
+    public static boolean insert(Category Category){
         try(Connection con=getConnect()) {
             PreparedStatement pt=con.prepareStatement("insert into Category values(?, ?)");
             pt.setInt(1, Category.getCategory_id());
@@ -86,7 +86,7 @@ public class CategoryDB implements DatabaseInfo{
         return true;
     }
     
-    public int countCategory(){
+    public static int countCategory(){
         int number=0;
         try (Connection con = getConnect()){
             PreparedStatement pt=con.prepareStatement("select count(Category_id) as count from Category");

@@ -1,8 +1,4 @@
-<%-- 
-    Document   : header
-    Created on : Mar 2, 2024, 6:54:38 PM
-    Author     : PC
---%>
+
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="model.User"%>
@@ -23,22 +19,22 @@
             <!-- Phần header 1 -->
             <nav class="navbar navbar-expand-lg navbar-light bg-light">
                 <!-- logo -->
-                <a class="navbar-brand" href="#">PTN SHOP</a>
+                <a class="navbar-brand" href="${pageContext.request.contextPath}/index.jsp">PTN SHOP</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
 
                 <!-- tìm kiếm-->
                 <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
-                    <form class="form-inline my-2 my-lg-0">
-                        <input class="form-control mr-sm-2" type="search" placeholder="Search">
+                    <form class="form-inline my-2 my-lg-0" action="search">
+                        <input class="form-control mr-sm-2" type="search" placeholder="Search" name="searchContent">
                         <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
                     </form>
                 </div>
                 <!-- nav-->
                 <ul class="navbar-nav">
                     <li class="nav-item nav_component">
-                        <a class="nav-link" href="#">Home</a>
+                        <a class="nav-link" href="${pageContext.request.contextPath}/index.jsp" >Home</a>
                     </li>
                     <li class="nav-item nav_component">
                         <a class="nav-link" href="#">About</a>
@@ -47,7 +43,7 @@
                         <a class="nav-link" href="#">Product</a>
                     </li>
                     <li class="nav-item nav_component">
-                        <a class="nav-link" href="#">Cart</a>
+                        <a class="nav-link" href="${pageContext.request.contextPath}/cart/cart.jsp">Cart</a>
                     </li>
                     <li class="nav-item nav_component">
                         <a class="nav-link" href="#">Buy</a>

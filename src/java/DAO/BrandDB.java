@@ -19,7 +19,7 @@ import model.Brand;
  * @author tinyl
  */
 public class BrandDB implements DatabaseInfo{
-    public Connection getConnect(){
+    public static Connection getConnect(){
         try {
             Class.forName(DRIVERNAME);
         } catch (ClassNotFoundException e) {
@@ -35,7 +35,7 @@ public class BrandDB implements DatabaseInfo{
         }
         return null;
     }
-    public List<Brand> getAll(){
+    public static List<Brand> getAll(){
         List<Brand> listBrand = new ArrayList<>();
         String sql = "select * from brand";
         try (Connection con=getConnect()){
@@ -54,7 +54,7 @@ public class BrandDB implements DatabaseInfo{
         return listBrand;
     }
     
-    public Brand getBrandByID(int brand_id){
+    public static Brand getBrandByID(int brand_id){
         Brand brand = null;
         String sql = "select * from brand where brand_id=?";       
         try(Connection con=getConnect()){
@@ -74,7 +74,7 @@ public class BrandDB implements DatabaseInfo{
         return brand;
     }
     
-    public boolean insert(Brand brand){
+    public static boolean insert(Brand brand){
         try(Connection con=getConnect()) {
             PreparedStatement pt=con.prepareStatement("insert into brand values(?, ?, ?)");
             pt.setInt(1, brand.getBrand_id());
@@ -88,7 +88,7 @@ public class BrandDB implements DatabaseInfo{
         return true;
     }
     
-    public int countBrand(){
+    public static int countBrand(){
         int number=0;
         try (Connection con = getConnect()){
             PreparedStatement pt=con.prepareStatement("select count(brand_id) as count from brand");

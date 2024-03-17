@@ -25,6 +25,12 @@ public class Laptop {
     private boolean status;
     private Specification specification;
 
+    public Laptop() {
+        this.brand = null;
+        this.category = null;
+    }
+    
+    
     public Laptop(String laptop_id, String laptop_name, String laptop_img, String color, double purchase_price, double selling_price, Brand brand, Category category, String describe, int tax, int deposit, boolean status, Specification specificaion) {
         this.laptop_id = laptop_id;
         this.laptop_name = laptop_name;
@@ -81,7 +87,7 @@ public class Laptop {
         this.selling_price = selling_price;
     }
 
-  
+    
 
     public String getDescribe() {
         return describe;
@@ -122,7 +128,7 @@ public class Laptop {
     public Category getCategory() {
         return category;
     }
-
+    
     
 
     public void setColor(String color) {
@@ -143,20 +149,7 @@ public class Laptop {
 
     @Override
     public int hashCode() {
-        int hash = 3;
-        hash = 97 * hash + Objects.hashCode(this.laptop_id);
-        hash = 97 * hash + Objects.hashCode(this.laptop_name);
-        hash = 97 * hash + Objects.hashCode(this.laptop_img);
-        hash = 97 * hash + Objects.hashCode(this.color);
-        hash = 97 * hash + (int) (Double.doubleToLongBits(this.purchase_price) ^ (Double.doubleToLongBits(this.purchase_price) >>> 32));
-        hash = 97 * hash + (int) (Double.doubleToLongBits(this.selling_price) ^ (Double.doubleToLongBits(this.selling_price) >>> 32));
-        hash = 97 * hash + Objects.hashCode(this.brand);
-        hash = 97 * hash + Objects.hashCode(this.category);
-        hash = 97 * hash + Objects.hashCode(this.describe);
-        hash = 97 * hash + this.tax;
-        hash = 97 * hash + this.deposit;
-        hash = 97 * hash + (this.status ? 1 : 0);
-        hash = 97 * hash + Objects.hashCode(this.specification);
+        int hash = 7;
         return hash;
     }
 
@@ -172,44 +165,10 @@ public class Laptop {
             return false;
         }
         final Laptop other = (Laptop) obj;
-        if (Double.doubleToLongBits(this.purchase_price) != Double.doubleToLongBits(other.purchase_price)) {
-            return false;
-        }
-        if (Double.doubleToLongBits(this.selling_price) != Double.doubleToLongBits(other.selling_price)) {
-            return false;
-        }
-        if (this.tax != other.tax) {
-            return false;
-        }
-        if (this.deposit != other.deposit) {
-            return false;
-        }
-        if (this.status != other.status) {
-            return false;
-        }
-        if (!Objects.equals(this.laptop_id, other.laptop_id)) {
-            return false;
-        }
-        if (!Objects.equals(this.laptop_name, other.laptop_name)) {
-            return false;
-        }
-        if (!Objects.equals(this.laptop_img, other.laptop_img)) {
-            return false;
-        }
-        if (!Objects.equals(this.color, other.color)) {
-            return false;
-        }
-        if (!Objects.equals(this.describe, other.describe)) {
-            return false;
-        }
-        if (!Objects.equals(this.brand, other.brand)) {
-            return false;
-        }
-        if (!Objects.equals(this.category, other.category)) {
-            return false;
-        }
-        return Objects.equals(this.specification, other.specification);
+        return Objects.equals(this.laptop_id, other.laptop_id);
     }
+
+    
 
     @Override
     public String toString() {

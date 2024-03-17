@@ -29,7 +29,8 @@ public class LoginControll extends HttpServlet {
                
         String email=request.getParameter("email");
         String passowrd=request.getParameter("password");
-        String user_type=request.getParameter("user_type");       
+        String user_type=request.getParameter("user_type"); 
+        String url="/index.jsp";
         if(!email.matches("^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$")){
             request.setAttribute("errorEmail", "Not email");
             isError=true;
@@ -46,12 +47,13 @@ public class LoginControll extends HttpServlet {
             else{
                 HttpSession session=request.getSession();
                 session.setAttribute("user", user);
+                if(user.getUser_type()==true)url="/admin/admin.jsp";
             }
             
         }  
         request.setAttribute("email", email);
         request.setAttribute("user_type", user_type);
-        String url="/index.jsp";
+                                      
         if(isError)url="/access/login.jsp";
         RequestDispatcher rd=getServletContext().getRequestDispatcher(url);
         rd.forward(request, response);
